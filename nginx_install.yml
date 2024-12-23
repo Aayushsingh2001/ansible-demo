@@ -1,5 +1,5 @@
 ---
-- name: Installing Nginx and configuring it
+- name: Installing Nginx and Cronjob configuring it
   hosts: webservers
   become: true
 
@@ -8,3 +8,14 @@
       yum:
         name: nginx
         state: present
+
+    - name: Install Cronjob
+      yum:
+        name: cronie
+        state: present
+
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+        enable: true
