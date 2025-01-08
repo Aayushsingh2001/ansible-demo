@@ -5,12 +5,12 @@
 
   tasks:
     - name: Install Nginx
-      yum:
+      apt:
         name: nginx
         state: present
 
     - name: Install Cronjob
-      yum:
+      apt:
         name: cronie
         state: present
 
