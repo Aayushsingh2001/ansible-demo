@@ -1,21 +1,58 @@
 ---
 - name: Installing Nginx and Cronjob configuring it
-  hosts: wevservers
+  hosts: all
   become: true
 
+  vars:
+    package_name:
+      Ubuntu: apache2
+      Amazon: httpd
+
   tasks:
-    - name: Install Nginx
+
+    - name: Printing OS versions
+      debug:
+        msg: "This OS is {{ ansible_distribution }}"
+    
+    - name: Install apache webserver on AL2
+      yum: 
+        name: "{{ package_name['Amazon'] }}"
+        state: present
+      when: ansible_distribution == "Amazon"
+
+    - name: Install apache webserver on Ubuntu
+      apt: 
+        name: "{{ package_name['Ubuntu'] }}"
+        state: present
+      when: ansible_distribution == "Ubuntu"
+  
+    - name: Install Nginx on AL2
       yum:
         name: nginx
         state: present
+      when: ansible_distribution == "Amazon"
+
+    - name: Install Nginx on Ubuntu
+      apt:
+        name: nginx
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install Nginx on Debian
+      dnf:
+        name: nginx
+        state: present
+      when: ansible_distribution == "Debian"
 
     - name: Install Cronjob
       yum:
         name: cronie
         state: present
+      when: ansible_distribution == "Amazon"
 
     - name: Start Nginx
       service:
         name: nginx
         state: started
         enable: true
+      when: ansible_distribution == "Amazon"
