@@ -1,16 +1,16 @@
 ---
 - name: Installing Nginx and Cronjob configuring it
-  hosts: webservers
+  hosts: wevservers
   become: true
 
   tasks:
     - name: Install Nginx
-      apt:
+      yum:
         name: nginx
         state: present
 
     - name: Install Cronjob
-      apt:
+      yum:
         name: cronie
         state: present
 
