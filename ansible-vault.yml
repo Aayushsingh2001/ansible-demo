@@ -1,0 +1,15 @@
+---
+- name: Coping the aws_key
+  hosts: aws_linux
+  become: yes
+  vars: 
+    app_name: DevOps
+
+  vars_files: 
+    - "secret.yml"
+
+  tasks: 
+    - name: Copy the db password
+      copy:
+        content: "{{ db_password }}"  # Using the db_password variable dynamically
+        dest: /etc/devops_db_password.txt
