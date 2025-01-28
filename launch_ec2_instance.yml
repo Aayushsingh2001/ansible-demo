@@ -2,7 +2,7 @@
 - name: Provision EC2 instance & install XX 
   hosts: localhost
   vars:
-    ansible_python_interpreter: /mnt/c/Users/as699/OneDrive/Desktop/aayu_DevOps/Software_testing/ansible-demo/myenv/bin/python
+    ansible_python_interpreter: /mnt/c/Users/as699/OneDrive/Desktop/aayu_DevOps/ansible/ansible-demo/myenv/bin/python
   gather_facts: no
 
   tasks:
@@ -31,7 +31,7 @@
         key_name: aayushvm
         region: ap-south-1
         instance_type: t2.micro
-        image_id: ami-07b69f62c1d38b012
+        image_id: ami-0b7207e48d1b6c06f
         count: 1
         security_group: "{{ security_group.group_id }}"
       register: ec2
@@ -74,7 +74,7 @@
       service: 
         name: httpd
         state: started
-        enable: yes
+        enabled: yes
       delegate_to: "{{ item }}"
       with_items:
         - "{{ groups['dynamic_hosts'] }}"

@@ -1,0 +1,29 @@
+---
+# tasks file for webserver_config
+- name: Install Apache on dynamically added Ec2 instance
+  become: true
+  yum:
+    name: httpd
+    state: present
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups['dynamic_hosts'] }}"
+  vars:
+    ansible_ssh_private_key_file: "/mnt/c/Users/as699/OneDrive/Desktop/aayu_DevOps/cloud/aayushvm.pem"
+    ansible_user: ec2-user
+  when: groups["dynamic_hosts"] is defined and groups["dynamic_hosts"] | length > 0
+
+- name: Start apache servuce on ec2 instance
+  become: true
+  service: 
+    name: httpd
+    state: started
+    enabled: yes
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups['dynamic_hosts'] }}"
+  vars:
+    ansible_ssh_private_key_file: "/mnt/c/Users/as699/OneDrive/Desktop/aayu_DevOps/cloud/aayushvm.pem"
+    ansible_user: ec2-user
+  when: groups["dynamic_hosts"] is defined and groups["dynamic_hosts"] | length > 0
+      

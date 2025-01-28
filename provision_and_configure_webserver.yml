@@ -1,0 +1,9 @@
+---
+- name: Provision EC2 instance & install XX 
+  hosts: localhost
+  vars:
+    ansible_python_interpreter: /mnt/c/Users/as699/OneDrive/Desktop/aayu_DevOps/ansible/ansible-demo/myenv/bin/python
+  gather_facts: yes
+  roles:
+    - ec2_launch
+    - webserver_config
